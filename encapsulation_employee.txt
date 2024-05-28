@@ -1,0 +1,81 @@
+//assignment 2.3
+package Employee;
+import java.util.Scanner;
+
+// Employee class
+class Employee {
+ private int employeeId;
+ private String firstName;
+ private String lastName;
+ private String dateOfBirth;
+ private double salary;
+ public Employee(int employeeId, String firstName, String lastName,
+String dateOfBirth, double salary) {
+ this.employeeId = employeeId;
+ this.firstName = firstName;
+ this.lastName = lastName;
+ this.dateOfBirth = dateOfBirth;
+ this.salary = salary;
+ }
+ // Accessor methods
+ public int getEmployeeId() {
+ return employeeId;
+ }
+ public String getFirstName() {
+ return firstName;
+ }
+ public String getLastName() {
+ return lastName;
+ }
+ public String getDateOfBirth() {
+ return dateOfBirth;
+ }
+ public double getSalary() {
+ return salary;
+ }
+ // Mutator methods
+ public void setEmployeeId(int employeeId) {
+ this.employeeId = employeeId;
+ }
+ public void setFirstName(String firstName) {
+ this.firstName = firstName;
+ }
+ public void setLastName(String lastName) {
+ this.lastName = lastName;
+ }
+ public void setDateOfBirth(String dateOfBirth) {
+ this.dateOfBirth = dateOfBirth;
+ }
+ public void setSalary(double salary) {
+ this.salary = salary;
+ }
+ // Method to calculate yearly bonus
+ public double calculateYearlyBonus() {
+ // Example calculation based on salary
+ return 0.1 * salary;
+ }
+}
+package Employee;
+import java.util.Scanner;
+
+public class Main {
+ public static void main(String[] args) {
+ Scanner scanner = new Scanner(System.in);
+ System.out.println("Enter employee ID:");
+ int employeeId = scanner.nextInt();
+ System.out.println("Enter first name:");
+ String firstName = scanner.next();
+ System.out.println("Enter last name:");
+ String lastName = scanner.next();
+ System.out.println("Enter date of birth (YYYY-MM-DD):");
+ String dateOfBirth = scanner.next();
+ System.out.println("Enter salary:");
+ double salary = scanner.nextDouble();
+ // Create employee object with user-input data
+ Employee employee = new Employee(employeeId, firstName, lastName,
+dateOfBirth, salary);
+ System.out.println("Yearly Bonus: $" +
+employee.calculateYearlyBonus());
+ scanner.close();
+ }
+}

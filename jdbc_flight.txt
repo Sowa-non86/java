@@ -1,0 +1,74 @@
+package flights;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+public class FlightManagementSystem {
+private static final String JDBC_URL = "jdbc:mysql://localhost:3306/flightms";
+private static final String USERNAME = "root";
+private static final String PASSWORD = "swanand@2004";
+public void getFlightsByStatus(String status) {
+String sql = "SELECT * FROM flights WHERE status = ?";
+try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+PreparedStatement statement = connection.prepareStatement(sql)) {
+statement.setString(1, status);
+ResultSet resultSet = statement.executeQuery();
+while (resultSet.next()) {
+String flightNumber = resultSet.getString("flight_number");
+String departureTime = resultSet.getString("departure_time");
+String arrivalTime = resultSet.getString("arrival_time");
+System.out.println("Flight Number: " + flightNumber);
+System.out.println("Departure Time: " + departureTime);
+System.out.println("Arrival Time: " + arrivalTime);
+System.out.println("Status: " + status);
+System.out.println("--------------------------------------");
+}
+} catch (SQLException e) {
+System.err.println("Error retrieving " + status + " flights: " + e.getMessage());
+}
+}
+public static void main(String[] args) {
+FlightManagementSystem fms = new FlightManagementSystem();
+// Display Departure Flights
+System.out.println("Departure Flights:");
+fms.getFlightsByStatus("Departure");
+System.out.println();
+// Display Arrival Flights
+System.out.println("Arrival Flights:");
+fms.getFlightsByStatus("Arrival");
+System.out.println();
+// Display Delayed Flights
+System.out.println("Delayed Flights:");
+fms.getFlightsByStatus("Delayed");
+System.out.println();
+// Display Cancelled Flights
+System.out.println("Cancelled Flights:");
+fms.getFlightsByStatus("Cancelled");
+}
+}
+
+
+
+
+
+
+
+
+SQL:
+
+
+CREATE TABLE flights (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    flight_number VARCHAR(20),
+    departure_time DATETIME,
+    arrival_time DATETIME,
+    status VARCHAR(20)
+);
+
+
+INSERT INTO flights (flight_number, departure_time, arrival_time, status) VALUES
+('ABC123', '2024-04-10 08:00:00', '2024-04-10 10:00:00', 'Departure'),
+('XYZ789', '2024-04-12 15:30:00', '2024-04-12 18:00:00', 'Arrival'),
+('DEF456', '2024-04-11 12:45:00', '2024-04-11 14:30:00', 'Delayed'),
+('GHI789', '2024-04-13 09:15:00', '2024-04-13 11:30:00', 'Cancelled');

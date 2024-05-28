@@ -1,0 +1,147 @@
+//assignment 5
+package Course;
+import java.util.ArrayList;
+import java.util.Scanner;
+class Course {
+private String courseId;
+private String courseName;
+private ArrayList<String> studentsEnrolled;
+public Course(String courseId, String courseName) {
+this.courseId = courseId;
+this.courseName = courseName;
+this.studentsEnrolled = new ArrayList<>();
+}
+public void addStudent(String studentName, String studentId) {
+studentsEnrolled.add(studentName + " (" + studentId + ")");
+}
+public void displayCourseDetails() {
+System.out.println("Course ID: " + courseId);
+System.out.println("Course Name: " + courseName);
+System.out.println("Students Enrolled:");
+if (studentsEnrolled.isEmpty()) {
+System.out.println("No students enrolled yet.");
+} else {
+for (String student : studentsEnrolled) {
+System.out.println(student);
+}
+}
+}
+public boolean removeStudent(String studentId) {
+for (int i = 0; i < studentsEnrolled.size(); i++) {
+String student = studentsEnrolled.get(i);
+if (student.contains(studentId)) {
+studentsEnrolled.remove(i);
+return true;
+}
+}
+return false;
+}
+public boolean containsStudent(String studentId) {
+for (String student : studentsEnrolled) {
+if (student.contains(studentId)) {
+return true;
+}
+}
+return false;
+}
+public void clearStudents() {
+studentsEnrolled.clear();
+}
+public int getNumberOfStudentsEnrolled() {
+return studentsEnrolled.size();
+}
+}
+
+package Course;
+import java.util.Scanner;
+
+public class courseManagement {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+Course course = null;
+while (true) {
+System.out.println("\nMenu:");
+System.out.println("1. Create Course");
+System.out.println("2. Add Student");
+System.out.println("3. Display Course Details");
+System.out.println("4. Remove Student");
+System.out.println("5. Check if Student Enrolled");
+System.out.println("6. Clear All Students Enrolled");
+System.out.println("7. Exit");
+System.out.println("Enter your choice:");
+int choice = scanner.nextInt();
+scanner.nextLine(); // Consume newline character
+switch (choice) {
+case 1:
+System.out.println("Enter Course ID:");
+String courseId = scanner.nextLine();
+System.out.println("Enter Course Name:");
+String courseName = scanner.nextLine();
+course = new Course(courseId, courseName);
+System.out.println("Course created successfully.");
+break;
+case 2:
+if (course == null) {
+System.out.println("Please create a course first.");
+} else {
+System.out.println("Enter Student Name:");
+String studentName = scanner.nextLine();
+System.out.println("Enter Student ID:");
+String studentId = scanner.nextLine();
+course.addStudent(studentName, studentId);
+System.out.println("Student added successfully.");
+}
+break;
+case 3:
+if (course == null) {
+System.out.println("Please create a course first.");
+} else {
+course.displayCourseDetails();
+}
+break;
+case 4:
+if (course == null) {
+System.out.println("Please create a course first.");
+} else {
+System.out.println("Enter Student ID to remove:");
+String idToRemove = scanner.nextLine();
+if (course.removeStudent(idToRemove)) {
+System.out.println("Student removed successfully.");
+} else {
+System.out.println("Student not found.");
+}
+}
+break;
+case 5:
+if (course == null) {
+System.out.println("Please create a course first.");
+} else {
+System.out.println("Enter Student ID to check if enrolled:");
+String idToCheck = scanner.nextLine();
+if (course.containsStudent(idToCheck)) {
+System.out.println("Student is enrolled.");
+} else {
+System.out.println("Student is not enrolled.");
+}
+}
+break;
+case 6:
+if (course == null) {
+System.out.println("Please create a course first.");
+} else {
+course.clearStudents();
+System.out.println("All students cleared.");
+}
+break;
+case 7:
+System.out.println("Exiting...");
+scanner.close();
+System.exit(0);
+break;
+default:
+System.out.println("Invalid choice. Please enter a valid option.");
+break;
+}
+}
+}
+}

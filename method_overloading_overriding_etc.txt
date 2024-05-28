@@ -1,0 +1,73 @@
+//Assignment 2.1
+package Account;
+
+class Account {
+ private double balance;
+ public Account(double initialBalance) {
+ this.balance = initialBalance;
+ }
+ public void deposit(double amount) {
+ balance += amount;
+ System.out.println("Deposited: $" + amount);
+ }
+ // Method to be overridden by derived classes
+ public void withdraw(double amount) {
+ if (balance >= amount) {
+ balance -= amount;
+ System.out.println("Withdrawn: $" + amount);
+ } else {
+ System.out.println("Insufficient funds.");
+ }
+ }
+ public double getBalance() {
+ return balance;
+ }
+}
+// Derived class SavingsAccount
+class SavingsAccount extends Account {
+ public SavingsAccount(double initialBalance) {
+ super(initialBalance);
+ }
+ // Method overloading with reason parameter
+ public void withdraw(double amount, String reason) {
+ super.withdraw(amount);
+ System.out.println("Reason for withdrawal: " + reason);
+ }
+}
+// Derived class CheckingAccount
+class CheckingAccount extends Account {
+ private double overdraftLimit;
+ public CheckingAccount(double initialBalance, double overdraftLimit) {
+ super(initialBalance);
+ this.overdraftLimit = overdraftLimit;
+ }
+ // Method overriding with overdraft protection
+ @Override
+ public void withdraw(double amount) {
+ if (getBalance() - amount >= -overdraftLimit) {
+ super.withdraw(amount);
+ } 
+ else {
+ System.out.println("Withdrawal amount exceeds overdraft limit.");
+ }
+ }
+}
+
+package Account;
+
+public class Main {	
+ public static void main(String[] args) {
+ // Polymorphic demonstration
+ Account savingsAccount = new SavingsAccount(1000);
+ Account checkingAccount = new CheckingAccount(500, 100);
+ // Demonstrate polymorphism
+ System.out.println("Savings Account:");
+ savingsAccount.withdraw(200);
+ System.out.println("Current Balance: $" +
+savingsAccount.getBalance());
+ System.out.println("\nChecking Account:");
+ checkingAccount.withdraw(600);
+ System.out.println("Current Balance: $" +
+checkingAccount.getBalance());
+ }
+}

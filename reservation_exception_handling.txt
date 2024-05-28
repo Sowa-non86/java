@@ -1,0 +1,67 @@
+//assignment 3
+package Reservation;
+import java.util.Scanner;
+public class Reservation {
+private int roomNumber;
+private String guestName;
+private String date;
+// Constructor to initialize reservation details with exception handling
+public Reservation() {
+Scanner scanner = new Scanner(System.in);
+try {
+// Initialize room number
+System.out.print("Enter room number: ");
+int roomNumberInput = scanner.nextInt();
+if (roomNumberInput <= 0) {
+throw new IllegalArgumentException("Room number must be positive");
+}
+this.roomNumber = roomNumberInput;
+// Initialize guest name
+scanner.nextLine(); // Consume newline
+System.out.print("Enter guest name: ");
+String guestNameInput = scanner.nextLine();
+if (guestNameInput == null || guestNameInput.isEmpty()) {
+throw new IllegalArgumentException("Guest name cannot be null or empty");
+}
+this.guestName = guestNameInput;
+// Initialize reservation date
+System.out.print("Enter reservation date: ");
+String dateInput = scanner.nextLine();
+if (dateInput == null || dateInput.isEmpty()) {
+throw new IllegalArgumentException("Reservation date cannot be null or empty");
+}
+this.date = dateInput;
+} catch (IllegalArgumentException e) {
+System.out.println("Error during reservation initialization: " +
+e.getMessage());
+} catch (java.util.InputMismatchException e) {
+System.out.println("Invalid input type. Please enter a valid number.");
+} finally {
+scanner.close(); // Ensure scanner is closed
+}
+}
+// Method to display reservation details with exception handling
+public void displayReservation() {
+try {
+if (roomNumber <= 0) {
+throw new IllegalArgumentException("Room number must be positive");
+}
+if (guestName == null || guestName.isEmpty()) {
+throw new IllegalArgumentException("Guest name cannot be null or empty");
+}
+System.out.println("Reservation Details:");
+System.out.println("Room Number: " + roomNumber);
+System.out.println("Guest Name: " + guestName);
+System.out.println("Date: " + date);
+} catch (IllegalArgumentException e) {
+System.out.println("Error during displaying reservation: " +
+e.getMessage());
+}
+}
+public static void main(String[] args) {
+// Create a reservation instance
+Reservation reservation = new Reservation();
+// Display reservation details
+reservation.displayReservation();
+}
+}

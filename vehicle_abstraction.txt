@@ -1,0 +1,30 @@
+//Assignment 2.2
+// Abstract class Vehicle
+package Vehicle;
+abstract class Vehicle {
+ abstract void engine();
+}
+// Car class
+class Car extends Vehicle {
+ @Override
+ void engine() {
+ System.out.println("Car has good engine");
+ }
+}
+// Truck class
+class Truck extends Vehicle {
+ @Override
+ void engine() {
+ System.out.println("Truck has bad engine");
+ }
+}
+package Vehicle;
+
+public class Main {
+ public static void main(String[] args) {
+ Vehicle car = new Car();
+ Vehicle truck = new Truck();
+ car.engine();
+ truck.engine();
+ }
+}

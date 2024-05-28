@@ -1,0 +1,69 @@
+//Assignment 4
+package AttendenceManagementSystem;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.lang.Runnable;
+public class AttendanceManagementSystem {
+public static void main(String[] args) {
+System.out.println("\t\tATTENDANCE SYSTEM!!!");
+System.out.println("____________________________________________________________________________");
+System.out.println("Below is the Overall attendance for Some Studentsof Division D");
+System.out.println("____________________________________________________________________________");
+System.out.println("Swanand G\tAnish K \tNikhil G\tPreet T");
+System.out.println("76% \t\t 75% \t\t 77% \t\t 69%");
+System.out.println("____________________________________________________________________________");
+System.out.println("\nEnter the number of classes That you want toCheck their Arrival Timings: ");
+Scanner scanner = new Scanner(System.in);
+System.out.println("Enter the number of classes: ");
+int numOfClasses = scanner.nextInt();
+List<ThreadAttendance> threads = new ArrayList<>();
+for (int i = 0; i < numOfClasses; i++) {
+System.out.println("Enter the name of class " + (i + 1) + ": ");
+String className = scanner.next();
+System.out.println("Enter the number of students in class " + (i +
+1) + ": ");
+int numOfStudents = scanner.nextInt();
+List<RunnableAttendance> students = new ArrayList<>();
+for (int j = 0; j < numOfStudents; j++) {
+System.out.println("Enter the name of student " + (j + 1) + ":");
+String studentName = scanner.next();
+students.add(new RunnableAttendance(className, studentName));
+}
+threads.add(new ThreadAttendance(className, students));
+}
+for (ThreadAttendance thread : threads) {
+thread.start();
+}
+scanner.close();
+}
+}
+class ThreadAttendance extends Thread {
+private final String className;
+private final List<RunnableAttendance> students;
+public ThreadAttendance(String className, List<RunnableAttendance>
+students) {
+this.className = className;
+this.students = students;
+}
+@Override
+public void run() {
+System.out.println("Attendance for " + className + ":");
+for (RunnableAttendance student : students) {
+student.run();
+}
+}
+}
+class RunnableAttendance implements Runnable {
+private final String className;
+private final String studentName;
+public RunnableAttendance(String className, String studentName) {
+this.className = className;
+this.studentName = studentName;
+}
+@Override
+public void run() {
+int lateness = (int) (Math.random() * 60);
+System.out.println(studentName + " arrived " + lateness + " minutes late for " + className + " Class");
+}
+}
